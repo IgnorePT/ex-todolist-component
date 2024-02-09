@@ -1,0 +1,11 @@
+.item {
+	font-weight: normal;
+}
+
+.todo-app {
+	width: 600px;
+}
+
+#root {
+	color: aquamarine;
+}

@@ -6,7 +6,7 @@ Objetivo: Construir uma aplicação em React que exiba uma lista de tarefas com 
 
 Você deve criar um componente `TodoList` que recebe uma `prop` tarefas, que é um array de objetos onde cada objeto representa uma tarefa. Cada tarefa tem duas propriedades: `nome` (string) que descreve a tarefa e `prioridade` (string) que pode ser "alta", "media" ou "baixa".
 
-O componente deve renderizar uma lista não ordenada (<ul>) de itens de lista (<li>). Cada item deve exibir o nome da tarefa. Além disso, tarefas com prioridade "alta" devem ser destacadas de alguma forma (por exemplo, texto em vermelho).
+O componente deve renderizar uma lista não ordenada `<ul>` de itens de lista (`<li>`). Cada item deve exibir o nome da tarefa. Além disso, tarefas com prioridade "alta" devem ser destacadas de alguma forma (por exemplo, texto em vermelho).
 
 ## Requisitos:
 
