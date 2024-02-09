@@ -7,7 +7,7 @@ const ListItem = ({ nome, prioridade }) => {
 
 	return (
 		<li
-			className={`${style.item} ${style.item}`}
+			className={style.item}
 			style={{
 				color: prioridade === "alta" ? "red" : "black",
 			}}
