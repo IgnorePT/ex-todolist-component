@@ -4,7 +4,7 @@ import TodoList from "./components/TodoList/TodoList";
 
 let tarefasArray = [
 	{ nome: "Comprar leite", prioridade: "media" },
-	{ nome: "Comprar leite", prioridade: "media" },
+	{ nome: "Comprar leite 2", prioridade: "media" },
 	{ nome: "Pagar contas", prioridade: "alta" },
 	{ nome: "Pagar contas 2", prioridade: "alta" },
 	{ nome: "Ligar para o João", prioridade: "baixa" },
@@ -12,12 +12,17 @@ let tarefasArray = [
 ];
 
 function App() {
+	//UseState
 	//Paravra "use" indica que estamos perante um Hook ex: useRef // useEffect // useState
 	//Hook de React - useState - é uma função
 	// Arquitectura do useState
 	// parametros: valor inicial (opcional)
 	// retorna [] - retorna array
 	const [tarefas, setTarefas] = useState(tarefasArray);
+
+	// Estado criado para o Input - Controlled Component (= Data Bind)
+	// Criamos o estado inputState que ira ser utilizado como valor de
+	const [inputState, setInputState] = useState("");
 
 	const filtrarTarefas = (prioridade) => {
 		setTarefas(
@@ -27,27 +32,8 @@ function App() {
 
 	return (
 		<>
-			{/* Trabalhar aqui! */}
 			<div>
-				<button
-					onClick={() => filtrarTarefas("alta")}
-					// onClick={() => {
-					// 	console.log("Antes de Atualizar: ", estado);
-					// 	atualizarEstado([]);
-					// 	atualizarEstado((estadoAnterior) => {
-					// 		return [
-					// 			...estadoAnterior,
-					// 			{
-					// 				nome: "Comprar leite",
-					// 				prioridade: "media",
-					// 			},
-					// 		];
-					// 	});
-
-					// 	console.log("Depois de Atualizar: ", estado);
-					// }}
-					className={style.btn}
-				>
+				<button onClick={() => filtrarTarefas("alta")} className={style.btn}>
 					Alta
 				</button>
 				<button onClick={() => filtrarTarefas("baixa")} className={style.btn}>
@@ -59,12 +45,45 @@ function App() {
 			</div>
 
 			<TodoList tarefas={tarefas} titulo="Meu Titulo" />
-			{/* 
-        React.createElement("xxx", {
-          tarefas: tarefasArray, titulo: "Meu Titulo"
-        })
-      
-      */}
+
+			<div
+				style={{
+					display: "flex",
+					gap: "1rem",
+				}}
+			>
+				{/* Controlled Form Component Input */}
+				<input
+					style={{
+						background: "#fff",
+						padding: "1.5rem",
+						borderRadius: "5px",
+					}}
+					onChange={(event) => {
+						console.log(event.target.value);
+						setInputState(event.target.value);
+					}}
+					value={inputState}
+					type="text"
+					placeholder="Adicionar todo"
+				/>
+				<button
+					onClick={() => {
+						// Action de Submit
+						// Neste caso adicionamos o input as nossas tarefas
+						setTarefas([
+							...tarefas,
+							{
+								nome: inputState,
+								prioridade: "baixa",
+							},
+						]);
+						setInputState("");
+					}}
+				>
+					Adicionar
+				</button>
+			</div>
 		</>
 	);
 }
