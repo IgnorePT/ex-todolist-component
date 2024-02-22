@@ -18,46 +18,18 @@ function App() {
 	// Arquitectura do useState
 	// parametros: valor inicial (opcional)
 	// retorna [] - retorna array
-	const [tarefasTodas, setTarefasTodas] = useState(tarefasArray);
 	const [tarefas, setTarefas] = useState(tarefasArray);
+
+	// Estado criado para o Input - Controlled Component (= Data Bind)
+	// Criamos o estado inputState que ira ser utilizado como valor de
+	const [inputState, setInputState] = useState("");
 
 	const filtrarTarefas = (prioridade) => {
 		setTarefas(
-			tarefasTodas.filter((tarefa) => tarefa.prioridade === prioridade)
+			tarefasArray.filter((tarefa) => tarefa.prioridade === prioridade)
 		);
 	};
 
-	const addTodo = (evento) => {
-		evento.preventDefault();
-		console.log(evento.target);
-
-		const formData = new FormData(evento.target);
-
-		//Iterator Values
-		// let data = formData.values();
-
-		// data.forEach((value) => {
-		// 	console.log("Cenas: ", value);
-		// });
-
-		setTarefasTodas([
-			...tarefasTodas,
-			{
-				nome: formData.get("todo_input"),
-				prioridade: "baixa",
-			},
-		]);
-
-		setTarefas([
-			...tarefas,
-			{
-				nome: formData.get("todo_input"),
-				prioridade: "baixa",
-			},
-		]);
-	};
-
-	// Renderização
 	return (
 		<>
 			<div>
@@ -70,16 +42,9 @@ function App() {
 				<button onClick={() => filtrarTarefas("media")} className={style.btn}>
 					Media
 				</button>
-
-				<button onClick={() => setTarefas(tarefasTodas)} className={style.btn}>
-					Reset
-				</button>
 			</div>
 
-			<TodoList
-				tarefas={tarefas}
-				titulo={`Tens ${tarefas.length} tarefas por fazer`}
-			/>
+			<TodoList tarefas={tarefas} titulo="Meu Titulo" />
 
 			<div
 				style={{
@@ -87,21 +52,37 @@ function App() {
 					gap: "1rem",
 				}}
 			>
-				{/* Uncrontrolled Form Component Input */}
-				<form onSubmit={addTodo}>
-					<input
-						style={{
-							background: "#fff",
-							padding: "1.5rem",
-							borderRadius: "5px",
-						}}
-						id="todo_input"
-						name="todo_input"
-						type="text"
-						placeholder="Adicionar todo"
-					/>
-					<button type="submit">Adicionar</button>
-				</form>
+				{/* Controlled Form Component Input */}
+				<input
+					style={{
+						background: "#fff",
+						padding: "1.5rem",
+						borderRadius: "5px",
+					}}
+					onChange={(event) => {
+						console.log(event.target.value);
+						setInputState(event.target.value);
+					}}
+					value={inputState}
+					type="text"
+					placeholder="Adicionar todo"
+				/>
+				<button
+					onClick={() => {
+						// Action de Submit
+						// Neste caso adicionamos o input as nossas tarefas
+						setTarefas([
+							...tarefas,
+							{
+								nome: inputState,
+								prioridade: "baixa",
+							},
+						]);
+						setInputState("");
+					}}
+				>
+					Adicionar
+				</button>
 			</div>
 		</>
 	);
